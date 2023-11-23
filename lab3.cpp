@@ -9,7 +9,7 @@ CRITICAL_SECTION cs;
 
 void workThread(char* arr, int size) {
     int interval;
-    cout << "Введите временной интервал для отдыха после подготовки одного элемента в массиве: ";
+    cout << "Enter a time interval to rest after preparing one element in the array: ";
     cin >> interval;
 
     //cout << "Enter by thread work" << endl;
@@ -41,16 +41,15 @@ void countElementThread(char* arr, int size,int *count) {
 }
 
 int main() {
-    setlocale(LC_ALL, "rus");
     int size;
-    cout << "Введите размерность массива: ";
+    cout << "Enter size of array: ";
     cin >> size;
     char* arr = new char[size];
-    cout << "Заполните массив элементами:" << endl;
+    cout << "Enter elements of array:" << endl;
     for (int i = 0; i < size; i++) {
         cin >> arr[i];
     }
-    cout << "Исходный массив:" << endl;
+    cout << "Current array:" << endl;
     for (int i = 0; i < size; i++) {
         cout << arr[i] << " ";
     }
@@ -67,14 +66,14 @@ int main() {
     thread countElement(countElementThread, arr, size, count);
 
     WaitForSingleObject(hEvent, INFINITE);
-    cout << "Итоговый массив:" << endl;
+    cout << "The resulting array:" << endl;
     for (int i = 0; i < size; i++) {
         cout << arr[i] << " ";
     }
     cout << endl;
 
     EnterCriticalSection(&cs);
-    cout << "Результат работы потока CountElement: " << *count << endl;
+    cout << "The result of thread CountElement: " << *count << endl;
     LeaveCriticalSection(&cs);
     
     work.join();
